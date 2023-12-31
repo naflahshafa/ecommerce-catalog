@@ -1,0 +1,75 @@
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #1E1E1E;
+}
+
+.product-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.product-card {
+  position: relative;
+  min-width: 300px;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: auto;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+  background-color: white;
+}
+  
+.product-card .product-image {
+  max-width: 200px;
+  margin-bottom: 10px;
+}
+
+.product-card .product-image img {
+  max-width: 100px;
+  margin-bottom: 10px;
+}
+
+.product-card .group {
+  text-align: center;
+}
+
+.product-card h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  border-bottom: 2px solid transparent; /* Atur garis bawah sebagai warna default */
+}
+
+.rating {
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+}
+
+.page-men {
+  background-color: #D6E6FF;
+}
+
+.page-women {
+  background-color: #FDE2FF;
+}
+
+.page-unavailable {
+  background-color: #DCDCDC;
+}
