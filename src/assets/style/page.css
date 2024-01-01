@@ -23,30 +23,76 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 10px 20px;
   margin: auto;
   box-shadow: 0 15px 45px rgba(0,0,0,0.1);
   background-color: white;
 }
   
 .product-card .product-image {
-  max-width: 200px;
-  margin-bottom: 10px;
+
 }
 
 .product-card .product-image img {
-  max-width: 100px;
-  margin-bottom: 10px;
+  max-width: 200px;
+  padding: 5px 0px;
 }
 
 .product-card .group {
+  position: relative;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding-left: 5px;
+}
+
+.product-card .group h2 {
   text-align: center;
+  margin: 20px 0px;
+  padding: 10px 0px;
+}
+
+.product-card .group .group2 {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+  color: #3F3F3F;
+}
+
+.product-card .group p {
+  border-top: 1px solid #DCDCDC; 
+  padding: 10px 0px;
+}
+
+.product-card .group h3 {
+  border-top: 1px solid #DCDCDC;
+  padding-top: 15px;
+  margin-top: 50px;
+}
+
+.product-card .group .product-button {
+  display: flex;
+  margin: 10px 0px;
 }
 
 .product-card h2 {
   font-size: 1.5em;
   margin-bottom: 10px;
-  border-bottom: 2px solid transparent; /* Atur garis bawah sebagai warna default */
+}
+
+.product-img-unavailable-background {
+  background-image: url('../page-unavailable.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.product-img-unavailable {
+  display: none;
+}
+
+.product-unavailable {
+  padding: 70px 0;
+  text-align: center;
 }
 
 .rating {
@@ -54,8 +100,9 @@ body {
 }
 
 button {
+  flex: 1;
   padding: 10px;
-  margin: 5px;
+  margin: 5px 3px;
   border: none;
   cursor: pointer;
   color: white;
@@ -63,13 +110,13 @@ button {
 }
 
 .page-men {
-  background-color: #D6E6FF;
+  background: linear-gradient(#D6E6FF 70%, transparent 50%);
 }
 
 .page-women {
-  background-color: #FDE2FF;
+  background: linear-gradient(#FDE2FF 70%, transparent 50%);
 }
 
 .page-unavailable {
-  background-color: #DCDCDC;
+  background: linear-gradient(#DCDCDC 70%, transparent 50%);
 }

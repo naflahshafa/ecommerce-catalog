@@ -2,35 +2,52 @@
   <div class="product-display" :class="{'page-men': isMenCategory, 'page-women': isWomenCategory, 'page-unavailable': isUnavailableCategory}">
     <div v-if="loading">Loading...</div>
 
-    <div v-if="error">Error fetching data: {{ error }}</div>
+    <div v-else-if="error">
+      <div class="product-card product-img-unavailable-background">
+        <div class="product-unavailable">
+          <p>Error fetching data: {{ error }}</p>
+          <button :style="{ background: categoryColor }" @click="nextProduct">Next Product</button>
+        </div>
+      </div>
+    </div>
 
-    <div v-if="!isUnavailableCategory">
-      <div v-if="isProductAvailable && !loading">
+    <div v-else>
+      <div v-if="isProductAvailable && (isMenCategory || isWomenCategory)">
         <div class="product-card">
           <div class="product-image">
             <img :src="product.image" alt="Product Image"/>
           </div>
           <div class="group">
-            <h2 :style="{ color: categoryColor, 'border-bottom-color': categoryColor }">{{ product.title }}</h2>
-            <h4>{{ product.category }}</h4>
-            <p>Rating: {{ product.rating.rate }} / 5 ({{ product.rating.count }} reviews)</p>
+            <h2 :style="{ color: categoryColor}">{{ product.title }}</h2>
+            <div class="group2">
+              <h4>{{ product.category }}</h4>
+              <h4>Rating: {{ product.rating.rate }} / 5 ({{ product.rating.count }} reviews)</h4>
+            </div>
             <p>{{ product.description }}</p>
-            <h2 :style="{ color: categoryColor }">${{ product.price }}</h2>
-            <div class="-product-button">
+            <h3 :style="{ color: categoryColor }">${{ product.price }}</h3>
+            <div class="product-button">
               <button :style="{ background: categoryColor }" @click="buyNow">Buy Now</button>
               <button :style="{ background: categoryColor }" @click="nextProduct">Next Product</button>
             </div>
           </div>
         </div>
       </div>
-      <div v-else>
-        <p>Product unavailable.</p>
-        <button @click="nextProduct">Next Product</button>
+      <div v-else-if="!isProductAvailable && isUnavailableCategory">
+        <div class="product-card product-img-unavailable-background">
+          <div class="product-unavailable">
+            <p>This product is unavailable to show</p>
+            <button :style="{ background: categoryColor }" @click="nextProduct">Next Product</button>
+          </div>
+        </div>
       </div>
-    </div>
-    <div v-else>
-      <p>Product unavailable.</p>
-      <button @click="nextProduct">Next Product</button>
+      <div v-else>
+        <div class="product-card product-img-unavailable-background">
+          <div class="product-unavailable">
+            <p>This product is unavailable to show</p>
+            <button :style="{ background: categoryColor }" @click="nextProduct">Next Product</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -43,12 +60,11 @@ export default {
       error: null,
       product: null,
       categoryColor: '',
-      productIndex: 1, // Index awal
+      productIndex: 1,
       isProductAvailable: true,
     };
   },
   mounted() {
-    // Panggil API di sini
     this.fetchDataFromApi();
   },
   methods: {
@@ -75,23 +91,24 @@ export default {
       } else if (category === "women's clothing") {
         this.categoryColor = '#720006';
       } else {
-        this.categoryColor = '#1E1E1E'; // Warna default atau atur sesuai kebutuhan
-        this.isProductAvailable = false; // Set produk tidak tersedia jika kategori tidak sesuai
+        this.isProductAvailable = false;
+        this.categoryColor = '#1E1E1E';
       }
     },
     buyNow() {
       alert('Buy Now clicked!');
-      // Implementasikan fungsi Buy Now
     },
     async nextProduct() {
       try {
+        this.loading = true;
+
         const response = await fetch(`https://fakestoreapi.com/products/${this.productIndex}`);
         const product = await response.json();
 
         if (product) {
           this.product = product;
           this.setCategoryColor(this.product.category);
-          this.isProductAvailable = true; // Set kembali produk tersedia
+          this.isProductAvailable = true;
         } else {
           console.log('Invalid product data. Trying next product.');
           this.nextProduct();
@@ -103,6 +120,8 @@ export default {
         if (this.productIndex > 20) {
           this.productIndex = 1;
         }
+
+        this.loading = false;
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -116,7 +135,7 @@ export default {
       return this.product && this.product.category === "women's clothing";
     },
     isUnavailableCategory() {
-      return this.product && this.product.category !== "men's clothing" && this.product.category !== "women's clothing";
+      return !this.isMenCategory && !this.isWomenCategory && !this.isProductAvailable;
     },
   },
 };
