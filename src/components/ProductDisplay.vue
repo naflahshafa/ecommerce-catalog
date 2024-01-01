@@ -1,6 +1,6 @@
 <template>
   <div class="product-display" :class="{'page-men': isMenCategory, 'page-women': isWomenCategory, 'page-unavailable': isUnavailableCategory}">
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading" class="loader"></div>
 
     <div v-else-if="error">
       <div class="product-card product-img-unavailable-background">
